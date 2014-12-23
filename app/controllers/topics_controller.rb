@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :edit, :update, :destroy, :upvote]
-
+  before_filter :authenticate_user!, except: [:index, :show]
   # GET /topics
   # GET /topics.json
   def index
@@ -14,7 +14,8 @@ class TopicsController < ApplicationController
 
   # GET /topics/new
   def new
-    @topic = Topic.new
+    #@topic = Topic.new
+    @topic = current_user.topics.new
   end
 
   # GET /topics/1/edit
@@ -24,8 +25,8 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(topic_params)
-
+    #@topic = Topic.new(topic_params)
+    @topic = current_user.topics.new(topic_params)
     respond_to do |format|
       if @topic.save
         format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
@@ -62,6 +63,7 @@ class TopicsController < ApplicationController
   end
 
   def upvote
+    @topic.votes.user = current_user
     @topic.votes.create!
     redirect_to topics_path, notice: "Vote successfully!"
   end
