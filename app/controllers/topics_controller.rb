@@ -66,8 +66,9 @@ class TopicsController < ApplicationController
     if current_user.votes.find_by(topic_id: @topic.id).nil?
 #    if current_user.votes.find_by_topic_id(@topic.id).nil?
 #    if current_user.votes.where(topic_id: @topic.id).size < 1
-      @vote = @topic.votes.new(user_id:  current_user.id)
-      @vote.save!
+#      @vote = @topic.votes.new(user_id:  current_user.id)
+#      @vote.save!
+      @topic.votes.create!(user_id:  current_user.id)
       redirect_to topics_path, notice: "Vote successfully!"
     else
       redirect_to topics_path, notice: "Vote already!"
