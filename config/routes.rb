@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     member do
       post 'upvote'
     end
+    collection do
+      get  'myvotes'
+    end
   end
 
   root to: "topics#index"

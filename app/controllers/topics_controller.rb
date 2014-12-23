@@ -75,6 +75,11 @@ class TopicsController < ApplicationController
     end
   end
 
+  def myvotes
+    @votes = current_user.votes.select(:topic_id).ids
+    @topics = Topic.find(@votes)
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic
