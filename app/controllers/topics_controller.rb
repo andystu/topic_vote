@@ -76,8 +76,9 @@ class TopicsController < ApplicationController
   end
 
   def myvotes
-    @votes = current_user.votes.select(:topic_id).ids
-    @topics = Topic.find(@votes)
+#    @votes = current_user.votes.select(:topic_id).ids
+    @my_voted_topic = current_user.votes.pluck(:topic_id)
+    @topics = Topic.find(@my_voted_topic)
   end
   
   private
